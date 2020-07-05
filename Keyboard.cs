@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace ConsoleManaged
 {
+    // https://stackoverflow.com/questions/20482338/simulate-keyboard-input-in-c-sharp
     public class Keyboard
     {
         public void Send(ScanCodeShort a)
