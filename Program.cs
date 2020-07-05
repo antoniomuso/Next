@@ -22,8 +22,8 @@ namespace ConsoleManaged
 
         static async Task Main(string[] args)
         {
-            Console.Title = "GesturesServiceStatus[Initializing]";
-            Console.WriteLine("Execute one of the following gestures: Like, Drop-the-Mic, Rotate-Right ! press 'ctrl+c' to exit");
+            Console.Title = "ServiceStatus[Initializing]";
+            Console.WriteLine("Execute one of the following gestures: Like, Drop-the-Mic, Rotate-Right! Press any key to exit");
 
             // One can optionally pass the hostname/IP address where the gestures service is hosted
             var gesturesServiceHostName = !args.Any() ? "localhost" : args[0];
@@ -40,7 +40,7 @@ namespace ConsoleManaged
         {
             // Step 1: Connect to Microsoft Gestures service            
             _gesturesService = GesturesServiceEndpointFactory.Create(gesturesServiceHostName);
-            _gesturesService.StatusChanged += (s, arg) => Console.Title = $"GesturesServiceStatus [{arg.Status}]";
+            _gesturesService.StatusChanged += (s, arg) => Console.Title = $"ServiceStatus [{arg.Status}]";
             await _gesturesService.ConnectAsync();
 
             // Step 2: Define bunch of custom Gestures, each detection of the gesture will emit some message into the console
