@@ -6,13 +6,13 @@ namespace ConsoleManaged
     // https://stackoverflow.com/questions/20482338/simulate-keyboard-input-in-c-sharp
     public class Keyboard
     {
-        public void Send(ScanCodeShort a)
+        public void Send(VirtualKeyShort a)
         {
             INPUT[] Inputs = new INPUT[1];
             INPUT Input = new INPUT();
             Input.type = 1; // 1 = Keyboard Input
-            Input.U.ki.wScan = a;
-            Input.U.ki.dwFlags = KEYEVENTF.SCANCODE;
+            Input.U.ki.wVk = a;
+            Input.U.ki.dwFlags = KEYEVENTF.UNICODE;
             Inputs[0] = Input;
             SendInput(1, Inputs, INPUT.Size);
         }

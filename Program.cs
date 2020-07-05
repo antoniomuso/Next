@@ -122,9 +122,9 @@ namespace ConsoleManaged
             Console.WriteLine(args.GestureSegment.Name);
             Console.ResetColor();
             if (args.GestureSegment.Name == "FingerSnapGesture")
-                keyboard.Send(Keyboard.ScanCodeShort.RIGHT);
+                keyboard.Send(Keyboard.VirtualKeyShort.RIGHT);
             else if (args.GestureSegment.Name == "SwipeLeftGesture")
-                keyboard.Send(Keyboard.ScanCodeShort.LEFT);
+                keyboard.Send(Keyboard.VirtualKeyShort.LEFT);
         }
 
         private static async Task RecognizeSpeechAsync()
@@ -151,14 +151,14 @@ namespace ConsoleManaged
                     var rgxPrevious = new Regex(@"(^|\p{P})\s?previous slide($|\p{P})", RegexOptions.IgnoreCase);
                     if (rgxNext.IsMatch(e.Result.Text))
                     {
-                        keyboard.Send(Keyboard.ScanCodeShort.RIGHT);
+                        keyboard.Send(Keyboard.VirtualKeyShort.RIGHT);
                         Console.ForegroundColor = ConsoleColor.Magenta;
                         Console.Write(" OK!");
                         Console.ResetColor();
                     }
                     else if (rgxPrevious.IsMatch(e.Result.Text))
                     {
-                        keyboard.Send(Keyboard.ScanCodeShort.LEFT);
+                        keyboard.Send(Keyboard.VirtualKeyShort.LEFT);
                         Console.ForegroundColor = ConsoleColor.Magenta;
                         Console.Write(" OK!");
                         Console.ResetColor();
