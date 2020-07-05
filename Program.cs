@@ -998,6 +998,7 @@ namespace ConsoleManaged
     {
         private static GesturesServiceEndpoint _gesturesService;
         private static Gesture _snapGesture;
+        private static Gesture _swipeGesture;
         private static Keyboard keyboard;
 
         static void Main(string[] args)
@@ -1020,10 +1021,11 @@ namespace ConsoleManaged
             await _gesturesService.ConnectAsync();
 
             // Step 2: Define bunch of custom Gestures, each detection of the gesture will emit some message into the console
-            await RegisterSnapGesture();
+            await RegisterFingerSnapGesture();
+            await RegisterSwipeGesure("SwipeLeftGesture", PoseDirection.Left);
         }
 
-         private static async Task RegisterSnapGesture() 
+        private static async Task RegisterFingerSnapGesture() 
         {
             // Start with defining the first pose, ...
             // ... define the second pose, ...
@@ -1037,6 +1039,28 @@ namespace ConsoleManaged
             await _gesturesService.RegisterGesture(_snapGesture, isGlobal: true);
         }
 
+        private static async Task RegisterSwipeGesure(string name, PoseDirection direction)
+        {
+            // Start with defining the first pose, ..
+            var fingerSet = new HandPose("FingersSet", new PalmPose(new AnyHandContext(), direction, orientation: PoseDirection.Forward),
+                                                       new FingertipDistanceRelation(Finger.Middle, RelativeDistance.Touching, new[] { Finger.Index, Finger.Ring }),
+                                                       new FingerPose(new[] { Finger.Index, Finger.Middle, Finger.Ring }, PoseDirection.Forward));
+
+            // ... define the second pose, ...
+            var fingersBent = new HandPose("FingersBent", new PalmPose(new AnyHandContext(), direction, orientation: PoseDirection.Forward),
+                                                          new FingertipDistanceRelation(Finger.Middle, RelativeDistance.Touching, new[] { Finger.Index, Finger.Ring }),
+                                                          new FingerPose(new[] { Finger.Index, Finger.Middle, Finger.Ring }, direction | PoseDirection.Backward));
+
+            // ... finally define the gesture using the hand pose objects defined above forming a simple state machine
+            _swipeGesture = new Gesture(name, fingerSet, fingersBent);
+            _swipeGesture.Triggered += (s, e) => OnGestureDetected(s, e, ConsoleColor.Blue);
+
+            // Step 3: Register the gesture             
+            // Registering the like gesture _globally_ (i.e. isGlobal:true), by global registration we mean this gesture will be 
+            // detected even it was initiated not by this application or if the this application isn't in focus
+            await _gesturesService.RegisterGesture(_swipeGesture, isGlobal: true);
+        }
+
         private static void OnGestureDetected(object sender, GestureSegmentTriggeredEventArgs args, ConsoleColor foregroundColor)
         {
             Console.ForegroundColor = ConsoleColor.Red;
@@ -1044,7 +1068,10 @@ namespace ConsoleManaged
             Console.ForegroundColor = foregroundColor;
             Console.WriteLine(args.GestureSegment.Name);
             Console.ResetColor();
-            keyboard.Send(Keyboard.ScanCodeShort.RIGHT);
+            if (args.GestureSegment.Name == "FingerSnapGesture")
+                keyboard.Send(Keyboard.ScanCodeShort.RIGHT);
+            else if(args.GestureSegment.Name == "SwipeLeftGesture")
+                keyboard.Send(Keyboard.ScanCodeShort.LEFT);
         }
     }
 }
