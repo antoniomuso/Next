@@ -23,7 +23,7 @@ namespace ConsoleManaged
         static async Task Main(string[] args)
         {
             Console.Title = "ServiceStatus[Initializing]";
-            Console.WriteLine("Execute one of the following gestures: Like, Drop-the-Mic, Rotate-Right! Press any key to exit");
+            Console.WriteLine("Execute one of the following gestures: Like, Drop-the-Mic, Rotate-Right! Press any key to exit.");
 
             // One can optionally pass the hostname/IP address where the gestures service is hosted
             var gesturesServiceHostName = !args.Any() ? "localhost" : args[0];
@@ -145,26 +145,45 @@ namespace ConsoleManaged
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write($"We recognized: ");
                     Console.ResetColor();
-                    Console.Write(e.Result.Text);
 
                     var rgxNext = new Regex(@"(^|\p{P})\s?next slide($|\p{P})", RegexOptions.IgnoreCase);
                     var rgxPrevious = new Regex(@"(^|\p{P})\s?previous slide($|\p{P})", RegexOptions.IgnoreCase);
                     if (rgxNext.IsMatch(e.Result.Text))
                     {
+                        var substrings = Regex.Split(e.Result.Text, @"(next slide)", RegexOptions.IgnoreCase);
+                        foreach (var str in substrings)
+                        {
+                            if (rgxNext.IsMatch(str))
+                            {
+                                Console.ForegroundColor = ConsoleColor.Magenta;
+                                Console.Write(str);
+                                Console.ResetColor();
+                            }
+                             else
+                                Console.Write(str);
+                        }
+                        Console.WriteLine();
                         keyboard.Send(Keyboard.VirtualKeyShort.RIGHT);
-                        Console.ForegroundColor = ConsoleColor.Magenta;
-                        Console.Write(" OK!");
-                        Console.ResetColor();
                     }
                     else if (rgxPrevious.IsMatch(e.Result.Text))
                     {
+                        var substrings = Regex.Split(e.Result.Text, @"(previous slide)", RegexOptions.IgnoreCase);
+                        foreach (var str in substrings)
+                        {
+                            if (rgxPrevious.IsMatch(str))
+                            {
+                                Console.ForegroundColor = ConsoleColor.Magenta;
+                                Console.Write(str);
+                                Console.ResetColor();
+                            }
+                            else
+                                Console.Write(str);
+                        }
+                        Console.WriteLine();
                         keyboard.Send(Keyboard.VirtualKeyShort.LEFT);
-                        Console.ForegroundColor = ConsoleColor.Magenta;
-                        Console.Write(" OK!");
-                        Console.ResetColor();
                     }
-
-                    Console.WriteLine();
+                    else
+                        Console.WriteLine(e.Result.Text);
                 }
             };
 
