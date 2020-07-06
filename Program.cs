@@ -154,36 +154,12 @@ namespace ConsoleManaged
 
                     if (rgxNext.IsMatch(e.Result.Text))
                     {
-                        var substrings = Regex.Split(e.Result.Text, @"([Nn]ext slide)");
-                        foreach (var str in substrings)
-                        {
-                            if (rgxNext.IsMatch(str))
-                            {
-                                Console.ForegroundColor = ConsoleColor.Magenta;
-                                Console.Write(str);
-                                Console.ResetColor();
-                            }
-                             else
-                                Console.Write(str);
-                        }
-                        Console.WriteLine();
+                        LogRecognizedText(e.Result.Text, rgxNext);
                         keyboard.Send(Keyboard.VirtualKeyShort.RIGHT);
                     }
                     else if (rgxPrevious.IsMatch(e.Result.Text))
                     {
-                        var substrings = Regex.Split(e.Result.Text, @"([Pp]revious slide)");
-                        foreach (var str in substrings)
-                        {
-                            if (rgxPrevious.IsMatch(str))
-                            {
-                                Console.ForegroundColor = ConsoleColor.Magenta;
-                                Console.Write(str);
-                                Console.ResetColor();
-                            }
-                            else
-                                Console.Write(str);
-                        }
-                        Console.WriteLine();
+                        LogRecognizedText(e.Result.Text, rgxPrevious);
                         keyboard.Send(Keyboard.VirtualKeyShort.LEFT);
                     }
                     else
@@ -193,6 +169,23 @@ namespace ConsoleManaged
 
             // Start continuous speech recognition
             await recognizer.StartContinuousRecognitionAsync();
+        }
+
+        private static void LogRecognizedText(string text, Regex rgx)
+        {
+            var substrings = Regex.Split(text, @"([Nn]ext slide)|([Pp]revious slide)");
+            foreach (var str in substrings)
+            {
+                if (rgx.IsMatch(str))
+                {
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.Write(str);
+                    Console.ResetColor();
+                }
+                else
+                    Console.Write(str);
+            }
+            Console.WriteLine();
         }
     }
 }
