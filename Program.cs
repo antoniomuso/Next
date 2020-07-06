@@ -20,7 +20,7 @@ namespace ConsoleManaged
         private static Keyboard keyboard;
         private static SpeechRecognizer recognizer;
 
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
             Console.Title = "ServiceStatus[Initializing]";
             Console.WriteLine("Execute one of the following gestures: Like, Drop-the-Mic, Rotate-Right! Press the Escape (Esc) key to quit.");
@@ -35,7 +35,7 @@ namespace ConsoleManaged
             while (Console.ReadKey(true).Key != ConsoleKey.Escape);
 
             // Stop continuous speech recognition
-            await recognizer.StopContinuousRecognitionAsync();
+            recognizer.StopContinuousRecognitionAsync().Wait();
         }
 
         private static async Task RegisterGestures(string gesturesServiceHostName)
