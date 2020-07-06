@@ -23,14 +23,16 @@ namespace ConsoleManaged
         static async Task Main(string[] args)
         {
             Console.Title = "ServiceStatus[Initializing]";
-            Console.WriteLine("Execute one of the following gestures: Like, Drop-the-Mic, Rotate-Right! Press any key to exit.");
+            Console.WriteLine("Execute one of the following gestures: Like, Drop-the-Mic, Rotate-Right! Press the Escape (Esc) key to quit.");
+
+            keyboard = new Keyboard();
+            RecognizeSpeechAsync().Wait();
 
             // One can optionally pass the hostname/IP address where the gestures service is hosted
             var gesturesServiceHostName = !args.Any() ? "localhost" : args[0];
             RegisterGestures(gesturesServiceHostName).Wait();
-            keyboard = new Keyboard();
-            await RecognizeSpeechAsync();
-            Console.ReadKey();
+
+            while (Console.ReadKey(true).Key != ConsoleKey.Escape);
 
             // Stop continuous speech recognition
             await recognizer.StopContinuousRecognitionAsync();
@@ -121,6 +123,7 @@ namespace ConsoleManaged
             Console.ForegroundColor = foregroundColor;
             Console.WriteLine(args.GestureSegment.Name);
             Console.ResetColor();
+
             if (args.GestureSegment.Name == "FingerSnapGesture")
                 keyboard.Send(Keyboard.VirtualKeyShort.RIGHT);
             else if (args.GestureSegment.Name == "SwipeLeftGesture")
@@ -146,11 +149,12 @@ namespace ConsoleManaged
                     Console.Write($"We recognized: ");
                     Console.ResetColor();
 
-                    var rgxNext = new Regex(@"(^|\p{P})\s?next slide($|\p{P})", RegexOptions.IgnoreCase);
-                    var rgxPrevious = new Regex(@"(^|\p{P})\s?previous slide($|\p{P})", RegexOptions.IgnoreCase);
+                    var rgxNext = new Regex(@"(^|\p{P})\s?[Nn]ext slide($|\p{P})");
+                    var rgxPrevious = new Regex(@"(^|\p{P})\s?[Pp]revious slide($|\p{P})");
+
                     if (rgxNext.IsMatch(e.Result.Text))
                     {
-                        var substrings = Regex.Split(e.Result.Text, @"(next slide)", RegexOptions.IgnoreCase);
+                        var substrings = Regex.Split(e.Result.Text, @"([Nn]ext slide)");
                         foreach (var str in substrings)
                         {
                             if (rgxNext.IsMatch(str))
@@ -167,7 +171,7 @@ namespace ConsoleManaged
                     }
                     else if (rgxPrevious.IsMatch(e.Result.Text))
                     {
-                        var substrings = Regex.Split(e.Result.Text, @"(previous slide)", RegexOptions.IgnoreCase);
+                        var substrings = Regex.Split(e.Result.Text, @"([Pp]revious slide)");
                         foreach (var str in substrings)
                         {
                             if (rgxPrevious.IsMatch(str))
