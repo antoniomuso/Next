@@ -24,7 +24,7 @@ namespace Next
             Console.WriteLine("Execute one of the following gestures: Like, Drop-the-Mic, Rotate-Right! Press the Escape (Esc) key to quit.");
 
             keyboard = new Keyboard();
-            RecognizeSpeechAsync().Wait();
+            StartSpeechRecognitionAsync().Wait();
 
             // One can optionally pass the hostname/IP address where the gestures service is hosted
             var gesturesServiceHostName = !args.Any() ? "localhost" : args[0];
@@ -118,7 +118,7 @@ namespace Next
                 keyboard.Send(Keyboard.VirtualKeyShort.LEFT);
         }
 
-        private static async Task RecognizeSpeechAsync()
+        private static async Task StartSpeechRecognitionAsync()
         {
             var config =
                 SpeechConfig.FromSubscription(
