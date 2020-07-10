@@ -20,8 +20,9 @@ namespace Next
 
         static void Main(string[] args)
         {
-            Console.Title = "ServiceStatus[Initializing]";
-            Console.WriteLine("Execute one of the following gestures: Like, Drop-the-Mic, Rotate-Right! Press the Escape (Esc) key to quit.");
+            Console.Title = "Next! ServiceStatus[Initializing]";
+            Console.WriteLine("Welcome to Next! Start your presentation and leave this program running in" +
+                              "background. Press the Escape (Esc) key to quit.");
 
             keyboard = new Keyboard();
             StartSpeechRecognitionAsync().Wait();
@@ -40,7 +41,7 @@ namespace Next
         {
             // Step 1: Connect to Microsoft Gestures service            
             _gesturesService = GesturesServiceEndpointFactory.Create(gesturesServiceHostName);
-            _gesturesService.StatusChanged += (s, arg) => Console.Title = $"ServiceStatus [{arg.Status}]";
+            _gesturesService.StatusChanged += (s, arg) => Console.Title = $"Next! ServiceStatus [{arg.Status}]";
             await _gesturesService.ConnectAsync();
 
             // Step 2: Define bunch of custom Gestures, each detection of the gesture will emit some message into the console
