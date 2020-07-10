@@ -21,7 +21,6 @@ namespace Next
         static void Main(string[] args)
         {
             Console.Title = "Next! ServiceStatus[Initializing]";
-
             Console.WriteLine("\n .-----------------. .----------------.  .----------------.  .----------------.\n" + 
                               "| .--------------. || .--------------. || .--------------. || .--------------. |\n" +
                               "| | ____  _____  | || |  _________   | || |  ____  ____  | || |  _________   | |\n" +
@@ -33,14 +32,12 @@ namespace Next
                               "| |              | || |              | || |              | || |              | |\n" +
                               "| '--------------' || '--------------' || '--------------' || '--------------' |\n" +
                               " '----------------'  '----------------'  '----------------'  '----------------' \n");
-
             Console.WriteLine("Welcome to Next! Start your presentation and leave this program running in\n" +
-                              "background. You can use both gestures and voice to change slide.");
-            Console.WriteLine("Press the Escape(Esc) key to quit.");
+                              "background. You can use both gestures and voice to change slide.\n" +
+                              "Press the Escape(Esc) key to quit.");
 
             keyboard = new Keyboard();
             StartSpeechRecognitionAsync().Wait();
-
             RegisterGestures().Wait();
 
             while (Console.ReadKey(true).Key != ConsoleKey.Escape);
