@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace ConsoleManaged
+namespace Next
 {
     // https://stackoverflow.com/questions/20482338/simulate-keyboard-input-in-c-sharp
     public class Keyboard

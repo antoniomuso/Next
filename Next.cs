@@ -7,9 +7,9 @@ using Microsoft.Gestures.Stock.Gestures;
 using Microsoft.CognitiveServices.Speech;
 using System.Text.RegularExpressions;
 
-namespace ConsoleManaged
+namespace Next
 {
-    class Program
+    class Next
     {
         private static GesturesServiceEndpoint _gesturesService;
         private static Gesture _snapGesture;
