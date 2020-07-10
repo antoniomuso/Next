@@ -21,15 +21,27 @@ namespace Next
         static void Main(string[] args)
         {
             Console.Title = "Next! ServiceStatus[Initializing]";
-            Console.WriteLine("Welcome to Next! Start your presentation and leave this program running in" +
-                              "background. Press the Escape (Esc) key to quit.");
+
+            Console.WriteLine("\n .-----------------. .----------------.  .----------------.  .----------------.\n" + 
+                              "| .--------------. || .--------------. || .--------------. || .--------------. |\n" +
+                              "| | ____  _____  | || |  _________   | || |  ____  ____  | || |  _________   | |\n" +
+                              "| ||_   \\|_   _| | || | |_   ___  |  | || | |_  _||_  _| | || | |  _   _  |  | |\n" +
+                              "| |  |   \\ | |   | || |   | |_  \\_|  | || |   \\ \\  / /   | || | |_/ | | \\_|  | |\n" +
+                              "| |  | |\\ \\| |   | || |   |  _|  _   | || |    > `' <    | || |     | |      | |\n" +
+                              "| | _| |_\\   |_  | || |  _| |___/ |  | || |  _/ /'`\\ \\_  | || |    _| |_     | |\n" +
+                              "| ||_____|\\____| | || | |_________|  | || | |____||____| | || |   |_____|    | |\n" +
+                              "| |              | || |              | || |              | || |              | |\n" +
+                              "| '--------------' || '--------------' || '--------------' || '--------------' |\n" +
+                              " '----------------'  '----------------'  '----------------'  '----------------' \n");
+
+            Console.WriteLine("Welcome to Next! Start your presentation and leave this program running in\n" +
+                              "background. You can use both gestures and voice to change slide.");
+            Console.WriteLine("Press the Escape(Esc) key to quit.");
 
             keyboard = new Keyboard();
             StartSpeechRecognitionAsync().Wait();
 
-            // One can optionally pass the hostname/IP address where the gestures service is hosted
-            var gesturesServiceHostName = !args.Any() ? "localhost" : args[0];
-            RegisterGestures(gesturesServiceHostName).Wait();
+            RegisterGestures().Wait();
 
             while (Console.ReadKey(true).Key != ConsoleKey.Escape);
 
@@ -37,10 +49,10 @@ namespace Next
             recognizer.StopContinuousRecognitionAsync().Wait();
         }
 
-        private static async Task RegisterGestures(string gesturesServiceHostName)
+        private static async Task RegisterGestures()
         {
             // Step 1: Connect to Microsoft Gestures service            
-            _gesturesService = GesturesServiceEndpointFactory.Create(gesturesServiceHostName);
+            _gesturesService = GesturesServiceEndpointFactory.Create();
             _gesturesService.StatusChanged += (s, arg) => Console.Title = $"Next! ServiceStatus [{arg.Status}]";
             await _gesturesService.ConnectAsync();
 
