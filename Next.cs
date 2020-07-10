@@ -56,7 +56,7 @@ namespace Next
             _gesturesService.StatusChanged += (s, arg) => Console.Title = $"Next! ServiceStatus [{arg.Status}]";
             await _gesturesService.ConnectAsync();
 
-            // Step 2: Define bunch of custom Gestures, each detection of the gesture will emit some message into the console
+            // Step 2: Define bunch of custom Gestures
             await RegisterFingerSnapGesture();
             await RegisterRotateRightGesture();
             await RegisterRotateLeftGesture();
@@ -87,38 +87,30 @@ namespace Next
             // ... finally define the gesture using the hand pose objects defined above forming a simple state machine
             _rotateRightGesture = new Gesture("RotateRight", hold, rotate);
             _rotateRightGesture.Triggered += (s, e) => OnGestureDetected(s, e, ConsoleColor.Blue);
-
-            // Step 3: Register the gesture             
-            // Registering the like gesture _globally_ (i.e. isGlobal:true), by global registration we mean this gesture will be 
-            // detected even it was initiated not by this application or if the this application isn't in focus
+         
             await _gesturesService.RegisterGesture(_rotateRightGesture, isGlobal: true);
         }
 
         private static async Task RegisterRotateLeftGesture()
         {
-            // Start with defining the first pose, ...
             var hold = new HandPose("Hold", new FingerPose(new[] { Finger.Thumb, Finger.Index }, FingerFlexion.Open, PoseDirection.Forward),
                                             new FingertipDistanceRelation(Finger.Index, RelativeDistance.NotTouching, Finger.Thumb),
                                             new FingertipPlacementRelation(Finger.Index, RelativePlacement.Right, Finger.Thumb));
-            // ... define the second pose, ...
+
             var rotate = new HandPose("Rotate", new FingerPose(new[] { Finger.Thumb, Finger.Index }, FingerFlexion.Open, PoseDirection.Forward),
                                                 new FingertipDistanceRelation(Finger.Index, RelativeDistance.NotTouching, Finger.Thumb),
                                                 new FingertipPlacementRelation(Finger.Index, RelativePlacement.Above, Finger.Thumb));
 
-            // ... finally define the gesture using the hand pose objects defined above forming a simple state machine
             _rotateLeftGesture = new Gesture("RotateLeft", hold, rotate);
             _rotateLeftGesture.Triggered += (s, e) => OnGestureDetected(s, e, ConsoleColor.Yellow);
 
-            // Step 3: Register the gesture             
-            // Registering the like gesture _globally_ (i.e. isGlobal:true), by global registration we mean this gesture will be 
-            // detected even it was initiated not by this application or if the this application isn't in focus
             await _gesturesService.RegisterGesture(_rotateLeftGesture, isGlobal: true);
         }
 
         private static void OnGestureDetected(object sender, GestureSegmentTriggeredEventArgs args, ConsoleColor foregroundColor)
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write("Gesture detected! : ");
+            Console.Write("Gesture detected: ");
             Console.ForegroundColor = foregroundColor;
             Console.WriteLine(args.GestureSegment.Name);
             Console.ResetColor();
@@ -133,11 +125,7 @@ namespace Next
 
         private static async Task StartSpeechRecognitionAsync()
         {
-            var config =
-                SpeechConfig.FromSubscription(
-                    "7f4b0ded1b7b41d2aff19883627722ab",
-                    "westeurope");
-
+            var config = SpeechConfig.FromSubscription("7f4b0ded1b7b41d2aff19883627722ab", "westeurope");
             recognizer = new SpeechRecognizer(config);
 
             // Subscribe to event
@@ -145,11 +133,7 @@ namespace Next
             {
                 if (e.Result.Reason == ResultReason.RecognizedSpeech)
                 {
-                    // Do something with the recognized text
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write($"We recognized: ");
-                    Console.ResetColor();
-
+                    // Check if the recognized text is a command
                     var rgxNext = new Regex(@"(^|\p{P})\s?[Nn]ext slide($|\p{P})");
                     var rgxPrevious = new Regex(@"(^|\p{P})\s?[Pp]revious slide($|\p{P})");
 
@@ -163,8 +147,6 @@ namespace Next
                         LogRecognizedText(e.Result.Text, rgxPrevious);
                         keyboard.Send(Keyboard.VirtualKeyShort.LEFT);
                     }
-                    else
-                        Console.WriteLine(e.Result.Text);
                 }
             };
 
@@ -174,6 +156,10 @@ namespace Next
 
         private static void LogRecognizedText(string text, Regex rgx)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write("Voice command detected: ");
+            Console.ResetColor();
+
             var substrings = Regex.Split(text, @"([Nn]ext slide)|([Pp]revious slide)");
             foreach (var str in substrings)
             {
