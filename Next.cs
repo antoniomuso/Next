@@ -20,7 +20,7 @@ namespace Next
 
         static void Main(string[] args)
         {
-            Console.Title = "Next! ServiceStatus[Initializing]";
+            Console.Title = "Next! ServiceStatus [Initializing]";
             Console.WriteLine("\n     _   __                 __     __\n" +
                                 "    / | / /  ___    _  __  / /_   / /\n" +
                                 "   /  |/ /  / _ \\  | |/_/ / __/  / /\n" +
