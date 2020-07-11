@@ -12,7 +12,7 @@ namespace Next
     class Next
     {
         private static GesturesServiceEndpoint _gesturesService;
-        private static Gesture _snapGesture;
+        private static Gesture _fingerSnapGesture;
         private static Gesture _rotateRightGesture;
         private static Gesture _rotateLeftGesture;
         private static Keyboard _keyboard;
@@ -56,12 +56,12 @@ namespace Next
         private static async Task RegisterFingerSnapGesture()
         {
             // Step 3: Register the gesture
-            _snapGesture = new FingerSnapGesture("FingerSnap");
-            _snapGesture.Triggered += (s, e) => OnGestureDetected(s, e, ConsoleColor.Green);
+            _fingerSnapGesture = new FingerSnapGesture("FingerSnap");
+            _fingerSnapGesture.Triggered += (s, e) => OnGestureDetected(s, e, ConsoleColor.Green);
 
             // Registering the like gesture _globally_ (i.e. isGlobal:true), by global registration we mean this gesture will be 
             // detected even it was initiated not by this application or if the this application isn't in focus
-            await _gesturesService.RegisterGesture(_snapGesture, isGlobal: true);
+            await _gesturesService.RegisterGesture(_fingerSnapGesture, isGlobal: true);
         }
 
         private static async Task RegisterRotateRightGesture()
