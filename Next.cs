@@ -28,7 +28,7 @@ namespace Next
                                 " /_/ |_/   \\___/ /_/|_|  \\__/  (_)\n");
             Console.WriteLine("Welcome to Next! Start your presentation and leave this program running in\n" +
                               "background. You can use both gestures and voice to change slide.\n" +
-                              "Press the Escape(Esc) key to quit.");
+                              "Press the Escape (Esc) key to quit.");
 
             _keyboard = new Keyboard();
             StartSpeechRecognitionAsync().Wait();
@@ -56,7 +56,7 @@ namespace Next
         private static async Task RegisterFingerSnapGesture()
         {
             // Step 3: Register the gesture
-            _snapGesture = new FingerSnapGesture();
+            _snapGesture = new FingerSnapGesture("FingerSnap");
             _snapGesture.Triggered += (s, e) => OnGestureDetected(s, e, ConsoleColor.Green);
 
             // Registering the like gesture _globally_ (i.e. isGlobal:true), by global registration we mean this gesture will be 
@@ -106,7 +106,7 @@ namespace Next
             Console.WriteLine(args.GestureSegment.Name);
             Console.ResetColor();
 
-            if (args.GestureSegment.Name == "FingerSnapGesture")
+            if (args.GestureSegment.Name == "FingerSnap")
                 _keyboard.Send(Keyboard.VirtualKeyShort.RIGHT);
             else if (args.GestureSegment.Name == "RotateRight")
                 _keyboard.Send(Keyboard.VirtualKeyShort.RIGHT);
