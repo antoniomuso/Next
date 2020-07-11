@@ -15,35 +15,29 @@ namespace Next
         private static Gesture _snapGesture;
         private static Gesture _rotateRightGesture;
         private static Gesture _rotateLeftGesture;
-        private static Keyboard keyboard;
-        private static SpeechRecognizer recognizer;
+        private static Keyboard _keyboard;
+        private static SpeechRecognizer _recognizer;
 
         static void Main(string[] args)
         {
             Console.Title = "Next! ServiceStatus[Initializing]";
-            Console.WriteLine("\n .-----------------. .----------------.  .----------------.  .----------------.\n" + 
-                              "| .--------------. || .--------------. || .--------------. || .--------------. |\n" +
-                              "| | ____  _____  | || |  _________   | || |  ____  ____  | || |  _________   | |\n" +
-                              "| ||_   \\|_   _| | || | |_   ___  |  | || | |_  _||_  _| | || | |  _   _  |  | |\n" +
-                              "| |  |   \\ | |   | || |   | |_  \\_|  | || |   \\ \\  / /   | || | |_/ | | \\_|  | |\n" +
-                              "| |  | |\\ \\| |   | || |   |  _|  _   | || |    > `' <    | || |     | |      | |\n" +
-                              "| | _| |_\\   |_  | || |  _| |___/ |  | || |  _/ /'`\\ \\_  | || |    _| |_     | |\n" +
-                              "| ||_____|\\____| | || | |_________|  | || | |____||____| | || |   |_____|    | |\n" +
-                              "| |              | || |              | || |              | || |              | |\n" +
-                              "| '--------------' || '--------------' || '--------------' || '--------------' |\n" +
-                              " '----------------'  '----------------'  '----------------'  '----------------' \n");
+            Console.WriteLine("\n     _   __                 __     __\n" +
+                                "    / | / /  ___    _  __  / /_   / /\n" +
+                                "   /  |/ /  / _ \\  | |/_/ / __/  / /\n" +
+                                "  / /|  /  /  __/ _>  <  / /_   /_/\n" +
+                                " /_/ |_/   \\___/ /_/|_|  \\__/  (_)\n");
             Console.WriteLine("Welcome to Next! Start your presentation and leave this program running in\n" +
                               "background. You can use both gestures and voice to change slide.\n" +
                               "Press the Escape(Esc) key to quit.");
 
-            keyboard = new Keyboard();
+            _keyboard = new Keyboard();
             StartSpeechRecognitionAsync().Wait();
             RegisterGestures().Wait();
 
             while (Console.ReadKey(true).Key != ConsoleKey.Escape);
 
             // Stop continuous speech recognition
-            recognizer.StopContinuousRecognitionAsync().Wait();
+            _recognizer.StopContinuousRecognitionAsync().Wait();
         }
 
         private static async Task RegisterGestures()
@@ -113,20 +107,20 @@ namespace Next
             Console.ResetColor();
 
             if (args.GestureSegment.Name == "FingerSnapGesture")
-                keyboard.Send(Keyboard.VirtualKeyShort.RIGHT);
+                _keyboard.Send(Keyboard.VirtualKeyShort.RIGHT);
             else if (args.GestureSegment.Name == "RotateRight")
-                keyboard.Send(Keyboard.VirtualKeyShort.RIGHT);
+                _keyboard.Send(Keyboard.VirtualKeyShort.RIGHT);
             else if (args.GestureSegment.Name == "RotateLeft")
-                keyboard.Send(Keyboard.VirtualKeyShort.LEFT);
+                _keyboard.Send(Keyboard.VirtualKeyShort.LEFT);
         }
 
         private static async Task StartSpeechRecognitionAsync()
         {
             var config = SpeechConfig.FromSubscription("7f4b0ded1b7b41d2aff19883627722ab", "westeurope");
-            recognizer = new SpeechRecognizer(config);
+            _recognizer = new SpeechRecognizer(config);
 
             // Subscribe to event
-            recognizer.Recognized += (s, e) =>
+            _recognizer.Recognized += (s, e) =>
             {
                 if (e.Result.Reason == ResultReason.RecognizedSpeech)
                 {
@@ -137,18 +131,18 @@ namespace Next
                     if (rgxNext.IsMatch(e.Result.Text))
                     {
                         LogRecognizedText(e.Result.Text, rgxNext);
-                        keyboard.Send(Keyboard.VirtualKeyShort.RIGHT);
+                        _keyboard.Send(Keyboard.VirtualKeyShort.RIGHT);
                     }
                     else if (rgxPrevious.IsMatch(e.Result.Text))
                     {
                         LogRecognizedText(e.Result.Text, rgxPrevious);
-                        keyboard.Send(Keyboard.VirtualKeyShort.LEFT);
+                        _keyboard.Send(Keyboard.VirtualKeyShort.LEFT);
                     }
                 }
             };
 
             // Start continuous speech recognition
-            await recognizer.StartContinuousRecognitionAsync();
+            await _recognizer.StartContinuousRecognitionAsync();
         }
 
         private static void LogRecognizedText(string text, Regex rgx)
