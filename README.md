@@ -6,17 +6,16 @@
 
 ## Gestures
 if you want to use gestures, there are two different gestures (*Finger Snap* or *Rotate right*) to go to the next slide and one (*Rotate left*) to go back to the previous one.
+
 ### Finger Snap Gesture
 You can snap your finger to go on.
 
-![Finger Snap](images/finger_snap.gif)
-
-<p align="center">
-    <img src="images/finger_snap.gif">
-</p>
+<p align="center"> <img src="images/finger_snap.gif"> </p>
 
 ### Rotating Gestures
+Starting from an horizontal position, keep your thumb and index at the same distance and rotate either right, to go on, or left, to go back.
 
+<p align="center"> <img src="images/rotate.gif"> </p>
 
 ## Voice
 
