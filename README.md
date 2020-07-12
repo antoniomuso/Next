@@ -39,12 +39,15 @@ We set a common initial pose, in which the index finger and the thumb are well s
 
 <p align="center"> <img src="images/gestures_recognition.gif"> </p>
 
-Our choice fell on the rotating gestures, because it is very difficult that they can be misunderstood. At the beginning we thought about using the swipe gestures, because they would have been more natural, but the problem is that while you are presenting and explaining something you tend to gesticulate a lot and a random movement could generate a false positive. However, to rotate right to go on and to rotate left to go back is intuitive enough and harder misunderstood.
+Our choice fell on the rotating gestures, because it is very difficult that they can be misunderstood. At the beginning we thought about using the swipe gestures, because they would have been more natural, but the problem is that while you are presenting and explaining something you tend to gesticulate a lot and a random movement could generate a false positive. However, rotating right to go on and rotating left to go back is intuitive enough and harder misunderstood.
 
-Since going to the next slide is more frequent than going back, we decided to enhance flexibilty and comfort of the interface adding also the *Finger Snap* gesture to go on. It is a very easy gesture and rather impossible to confuse.
+Since going to the next slide is more frequent than going back, we decided to enhance interface flexibilty and comfort adding also the *Finger Snap* gesture to go on. It is a very easy gesture and rather impossible to confuse.
 
 ### Voice Recognition
 
+
 ## Authors
+[Francesca Romana Mattei](https://github.com/francescaromana), [Antonio Musolino](https://github.com/antoniomuso) and [Davide Sforza](https://github.com/dsforza96).
 
 ## License
+Our code is released under [MIT license](LICENSE).
