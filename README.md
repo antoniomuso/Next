@@ -28,7 +28,7 @@ In order to use *Next!* you need a Microsoft Kinect v2 and the [Project Gesture 
 Once cloned or dowloaded this repository, just open the [Next.sln](Next.sln) solution in Visual Studio and run it.
 
 ## Developement
-Our software exploits Kinect's depth and infrared sensors to perform gesture recognition and its microphones array for capturing voice.
+Our software exploits Kinect's depth and infrared sensors to perform gesture recognition and its microphone array for capturing voice.
 
 Once detected a command (either gestural or vocal), a keyboard signal is sent by the program to the application running in foreground. In case you intend to go on, then the `right arrow` key is emulated, otherwise the `left arrow` one. Due to this implementation, the program can be used with any application chosen by the user, without being strictly linked to a single one through an API.
 
