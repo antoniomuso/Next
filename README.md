@@ -12,7 +12,7 @@ You can snap your finger to go on.
 ![Finger Snap](images/finger_snap.gif)
 
 <p align="center">
-    <img src="images/finger_snap.gif", width="480">
+    <img src="images/finger_snap.gif">
 </p>
 
 ### Rotating Gestures
