@@ -8,7 +8,9 @@
 if you want to use gestures, there are two different gestures (*Finger Snap* or *Rotate right*) to go to the next slide and one (*Rotate left*) to go back to the previous one.
 ### Finger Snap Gesture
 You can snap your finger to go on.
-![ciao](images/finger_snap.gif)
+
+![Finger Snap](images/finger_snap.gif)
+
 <p align="center">
     <img src="images/finger_snap.gif", width="480">
 </p>
