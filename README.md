@@ -30,16 +30,18 @@ Once cloned or dowloaded this repository, just open the [Next.sln](Next.sln) sol
 ## Developement
 Our software exploits Kinect's depth and infrared sensors to perform gesture recognition and its microphones array for capturing voice.
 
-Once detected a command (either gestural or vocal), a keyboard signal is sent by the program to the application running in foreground. In case you intend to go on, then the `right arrow` key is emulated, otherwise the `left arrow` one. Due to this implementation, the program can be used with any application chosen by the user, without being strictly linked to a single one through an API.
+Once detected a command (either gestural or vocal), a keyboard signal is sent by the program to the application running in foreground. In case you intend to go on, then the `right arrow` key is emulated, otherwise the `left arrow` one. Due to this implementation, the program can be used with any application chosen by the user, without beHoing strictly linked to a single one through an API.
 
 ### Gestural Interaction
 Regarding the employed gestures, the *Finger Snap* gesture is a predefined one in the gestures SDK, while we had to define the *Rotate Right* and *Rotate Left* gestures.
 The definition of a gesture is seen as a sequence of two poses.
-We set an initial pose, in which the index finger and the thumb are well spaced and in horizontal position, while the other fingers are bent. In the second pose, instead, the disposition of the fingers is the same, but the hand is rotated by 90 degrees so that the thumb and the index are in vertical position. The difference between the two gestures (right and left) is recognized because the thumb is **above** the index in the former, viceversa in the latter.
+We set a common initial pose, in which the index finger and the thumb are well spaced and in horizontal position, while the other fingers are bent. In the second pose, instead, the disposition of the fingers is the same, but the hand is rotated by 90 degrees so that the thumb and the index are in vertical position. The difference between the two gestures (right and left) is recognized because the thumb is **above** the index in the former, viceversa in the latter.
 
 <p align="center"> <img src="images/gestures_recognition.gif"> </p>
 
-### gesture selection
+Our choice fell on the rotating gestures, because it is very difficult that they can be misunderstood. At the beginning we thought about using the swipe gestures, because they would have been more natural, but the problem is that while you are presenting and explaining something you tend to gesticulate a lot and a random movement could generate a false positive. However, to rotate right to go on and to rotate left to go back is intuitive enough and harder misunderstood.
+
+Since going to the next slide is more frequent than going back, we decided to enhance flexibilty and comfort of the interface adding also the *Finger Snap* gesture to go on. It is a very easy gesture and rather impossible to confuse.
 
 ### Voice Recognition
 
