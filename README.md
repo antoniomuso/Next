@@ -28,6 +28,20 @@ In order to use *Next!* you need a Microsoft Kinect v2 and the [Project Gesture 
 Once cloned or dowloaded this repository, just open the [Next.sln](Next.sln) solution in Visual Studio and run it.
 
 ## Developement
+Our software exploits Kinect's depth and infrared sensors to perform gesture recognition and its microphones array for capturing voice.
+
+Once detected a command (either gestural or vocal), a keyboard signal is sent by the program to the application running in foreground. In case you intend to go on, then the `right arrow` key is emulated, otherwise the `left arrow` one. Due to this implementation, the program can be used with any application chosen by the user, without being strictly linked to a single one through an API.
+
+### Gestural Interaction
+Regarding the employed gestures, the *Finger Snap* gesture is a predefined one in the gestures SDK, while we had to define the *Rotate Right* and *Rotate Left* gestures.
+The definition of a gesture is seen as a sequence of two poses.
+We set an initial pose, in which the index finger and the thumb are well spaced and in horizontal position, while the other fingers are bent. In the second pose, instead, the disposition of the fingers is the same, but the hand is rotated by 90 degrees so that the thumb and the index are in vertical position. The difference between the two gestures (right and left) is recognized because the thumb is **above** the index in the former, viceversa in the latter.
+
+<p align="center"> <img src="images/gestures_recognition.gif"> </p>
+
+### gesture selection
+
+### Voice Recognition
 
 ## Authors
 
