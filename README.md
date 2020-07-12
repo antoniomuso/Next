@@ -19,7 +19,7 @@ Starting from an horizontal position, keep your thumb and index at the same dist
 
 ## Voice
 If you prefer vocal interaction, you can use the commands "*next slide*" or "*previous slide*" to move. In case these words are said inside a sentence, they will be ignored and no action will be performed.
-For example as you can see in the [demo](https://youtu.be/r-WBsEpnS9Q), if you say "*Remember what we saw in the previous slide*", the slide will not be changed.
+For example as you can see in the [demo](https://youtu.be/r-WBsEpnS9Q), if you say "*Remember what we saw in the previous slide*", the slide will not be changed. Currently, the only supported language is English.
 
 ## Setup and Dependencies
 In order to use *Next!* you need a Microsoft Kinect v2 and the [Project Gesture SDK](https://www.microsoft.com/en-us/research/project/gesture/). Note that, due to these dependencies, it runs only on Microsoft Windows.
@@ -46,8 +46,7 @@ Since going to the next slide is more frequent than going back, we decided to en
 ### Vocal Interaction
 Even if the gestural interaction is better to use because the voice channel is already employed for the presentation, it is important to say that it works only if you are in the field of view of Kinect sensors. For this reason, the use of vocal interaction in some cases could add flexibility giving you the possibility to change slides although you are not in a good position. On the other hand, even if a malicious listener pronounces the command, it is recognized and generates an action undesired by the presenter.
 
-Currently the only supported language is English.
-In order to avoid that the pronunciation of the words "*next slide*" or "*previous slide*" inside more complex sentences triggers a command, we used a regular expression which matches commands if and only if they are pronunciated alone or syntactically separated from the rest of the sentence. This way, an expression such as "*Next slide, please*" is recognized as a command, while "*Next slide will show...*" is not.
+In order to avoid that the pronunciation of the words "*next slide*" or "*previous slide*" inside more complex sentences triggers a command, we used a regular expression which matches commands if and only if they are pronounced alone or syntactically separated from the rest of the sentence. This way, an expression such as "*Next slide, please*" is recognized as a command, while "*Next slide will show...*" is not.
 
 ## Authors
 [Francesca Romana Mattei](https://github.com/francescaromana), [Antonio Musolino](https://github.com/antoniomuso) and [Davide Sforza](https://github.com/dsforza96).
