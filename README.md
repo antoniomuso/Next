@@ -23,7 +23,6 @@ For example as you can see in the [demo](https://youtu.be/r-WBsEpnS9Q), if you s
 
 ## Setup and Dependencies
 In order to use *Next!* you need a Microsoft Kinect v2 and the [Project Gesture SDK](https://www.microsoft.com/en-us/research/project/gesture/). Note that, due to these dependencies, it runs only on Microsoft Windows.
-
  Voice recognition works with [Microsoft Azure Speech to Text](https://azure.microsoft.com/en-us/services/cognitive-services/speech-to-text/). It needs a subscription key for Azure Cognitive Services, that can be obtained through a Microsoft account.
 
 Once cloned or dowloaded this repository, just open the [Next.sln](Next.sln) solution in Visual Studio and run it.
