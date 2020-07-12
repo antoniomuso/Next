@@ -18,6 +18,7 @@ namespace Next
         private static Keyboard _keyboard;
         private static SpeechRecognizer _recognizer;
 
+
         static void Main(string[] args)
         {
             Console.Title = "Next! ServiceStatus [Initializing]";
@@ -39,7 +40,9 @@ namespace Next
             // Stop continuous speech recognition
             _recognizer.StopContinuousRecognitionAsync().Wait();
         }
-
+        
+        
+        // It registers the all the gestures that can be used.
         private static async Task RegisterGestures()
         {
             // Step 1: Connect to Microsoft Gestures service            
@@ -53,6 +56,8 @@ namespace Next
             await RegisterRotateLeftGesture();
         }
 
+
+        // It registers the finger snap gesture.
         private static async Task RegisterFingerSnapGesture()
         {
             // Step 3: Register the gesture
@@ -64,24 +69,28 @@ namespace Next
             await _gesturesService.RegisterGesture(_fingerSnapGesture, isGlobal: true);
         }
 
+
+        // It defines and registers the Rotate Right Gesture.
         private static async Task RegisterRotateRightGesture()
         {
-            // Start with defining the first pose, ...
+            // Start with defining the first pose
             var hold = new HandPose("Hold", new FingerPose(new[] { Finger.Thumb, Finger.Index }, FingerFlexion.Open, PoseDirection.Forward),
                                             new FingertipDistanceRelation(Finger.Index, RelativeDistance.NotTouching, Finger.Thumb),
                                             new FingertipPlacementRelation(Finger.Index, RelativePlacement.Right, Finger.Thumb));
-            // ... define the second pose, ...
+            // define the second pose
             var rotate = new HandPose("Rotate", new FingerPose(new[] { Finger.Thumb, Finger.Index }, FingerFlexion.Open, PoseDirection.Forward),
                                                 new FingertipDistanceRelation(Finger.Index, RelativeDistance.NotTouching, Finger.Thumb),
                                                 new FingertipPlacementRelation(Finger.Index, RelativePlacement.Below, Finger.Thumb));
 
-            // ... finally define the gesture using the hand pose objects defined above forming a simple state machine
+            // define the gesture using the hand pose objects defined above forming a simple state machine
             _rotateRightGesture = new Gesture("RotateRight", hold, rotate);
             _rotateRightGesture.Triggered += (s, e) => OnGestureDetected(s, e, ConsoleColor.Blue);
          
             await _gesturesService.RegisterGesture(_rotateRightGesture, isGlobal: true);
         }
 
+
+        // It defines and registers the Rotate Left Gesture.
         private static async Task RegisterRotateLeftGesture()
         {
             var hold = new HandPose("Hold", new FingerPose(new[] { Finger.Thumb, Finger.Index }, FingerFlexion.Open, PoseDirection.Forward),
@@ -98,6 +107,9 @@ namespace Next
             await _gesturesService.RegisterGesture(_rotateLeftGesture, isGlobal: true);
         }
 
+
+        // Method called when a gesture is detected. 
+        // Based on the kind of gesture, an action is performed.
         private static void OnGestureDetected(object sender, GestureSegmentTriggeredEventArgs args, ConsoleColor foregroundColor)
         {
             Console.ForegroundColor = ConsoleColor.Red;
@@ -114,6 +126,8 @@ namespace Next
                 _keyboard.Send(Keyboard.VirtualKeyShort.LEFT);
         }
 
+
+        // This method initializes the speech recognition service and looks for a command.
         private static async Task StartSpeechRecognitionAsync()
         {
             var config = SpeechConfig.FromSubscription("7f4b0ded1b7b41d2aff19883627722ab", "westeurope");
@@ -145,6 +159,8 @@ namespace Next
             await _recognizer.StartContinuousRecognitionAsync();
         }
 
+
+        // It prints the detected command on the console.
         private static void LogRecognizedText(string text, Regex rgx)
         {
             Console.ForegroundColor = ConsoleColor.Red;
