@@ -5,7 +5,7 @@
 **Watch a demo [here](https://youtu.be/r-WBsEpnS9Q).**
 
 ## Gestures
-If you want to use gestural interaction, there are two different gestures (*Finger Snap* or *Rotate right*) to go to the next slide and one (*Rotate left*) to go back to the previous one. 
+If you want to use gestural interaction, there are two different gestures (*Finger Snap* or *Rotate Right*) to go to the next slide and one (*Rotate Left*) to go back to the previous one. 
 You can use both hands, but Kinect support for left one is experimental.
 
 ### Finger Snap Gesture
@@ -13,14 +13,14 @@ You can snap your finger to go on.
 
 <p align="center"> <img src="images/finger_snap.gif"> </p>
 
-### Rotating Gestures
+### Rotate Gestures
 Starting from a horizontal position, keep your thumb and index at the same distance and rotate either right, to go on, or left, to go back.
 
 <p align="center"> <img src="images/rotate.gif"> </p>
 
 ## Voice
 If you prefer vocal interaction, you can use the commands "*next slide*" or "*previous slide*" to move. In case these words are said inside a sentence, they will be ignored and no action will be performed.
-For example as you can see in the [demo](https://youtu.be/r-WBsEpnS9Q), if you say "*Remember what we saw in the previous slide*", the slide will not be changed. Currently, the only supported language is English.
+For example, as you can see in the [demo](https://youtu.be/r-WBsEpnS9Q), if you say "*Remember what we saw in the previous slide*", the slide will not be changed. Currently, the only supported language is English.
 
 ## Setup and Dependencies
 In order to use *Next!* you need a Microsoft Kinect v2 and the [Project Gesture SDK](https://www.microsoft.com/en-us/research/project/gesture/). Note that, due to these dependencies, it runs only on Microsoft Windows.
@@ -29,7 +29,7 @@ In order to use *Next!* you need a Microsoft Kinect v2 and the [Project Gesture 
 Once cloned or dowloaded this repository, just open the [Next.sln](Next.sln) solution in Visual Studio and run it.
 
 ## Developement
-Our software exploits Kinect's depth and infrared sensors to perform gesture recognition and its microphone array for capturing voice.
+Our software exploits Kinect's depth sensor to perform gesture recognition and its microphone array for capturing voice.
 
 Once detected a command (either gestural or vocal), a keyboard signal is sent by the program to the application running in foreground. In case you intend to go on, then the `right arrow` key is emulated, otherwise the `left arrow` one. Due to this implementation, the program can be used with any application chosen by the user, without being strictly linked to a single one through an API.
 
@@ -45,7 +45,7 @@ Our choice fell on the rotating gestures because it is very difficult that they 
 Since going to the next slide is more frequent than going back, we decided to enhance interface flexibility and comfort adding also the *Finger Snap* gesture to go on. It is a very easy gesture and rather impossible to confuse.
 
 ### Vocal Interaction
-Even if the gestural interaction is better to use because the voice channel is already employed for the presentation, it is important to say that it works only if you are in the field of view of Kinect sensors. For this reason, the use of vocal interaction in some cases could add flexibility giving you the possibility to change slides although you are not in a good position. On the other hand, if a malicious listener pronounces the command, it is recognized and generates an action undesired by the presenter.
+Even if the gestural interaction is better to use because the voice channel is already employed for the presentation, it is important to say that it works only if you are in the field of view of Kinect sensors. For this reason, the use of vocal interaction in some cases could add flexibility giving you the possibility to change slides although you are not in a good position. On the other hand, if a malicious listener pronounces the command, it is recognized and generates an action undesired by the presenter. A possible solution could be using a speaker dependent system, so that the system is trained to recognize only the voice of the user. Microsoft Azure enables [this costumization](https://docs.microsoft.com/en-in/azure/cognitive-services/speech-service/how-to-custom-speech-test-and-train).
 
 In order to avoid that the pronunciation of the words "*next slide*" or "*previous slide*" inside more complex sentences triggers a command, we used a regular expression which matches commands if and only if they are pronounced alone or syntactically separated from the rest of the sentence. This way, an expression such as "*Next slide, please*" is recognized as a command, while "*Next slide will show...*" is not.
 
