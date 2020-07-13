@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.Gestures.Stock.Gestures;
 using Microsoft.CognitiveServices.Speech;
 using System.Text.RegularExpressions;
+using System.Configuration;
 
 namespace Next
 {
@@ -178,7 +179,9 @@ namespace Next
         // This method initializes the speech recognition service and looks for a command.
         private static async Task StartSpeechRecognitionAsync()
         {
-            var config = SpeechConfig.FromSubscription("7f4b0ded1b7b41d2aff19883627722ab", "westeurope");
+            var key = ConfigurationManager.AppSettings.Get("subscriptionKey");
+            var region = ConfigurationManager.AppSettings.Get("region");
+            var config = SpeechConfig.FromSubscription(key, region);
             _recognizer = new SpeechRecognizer(config);
 
             // Subscribe to event
