@@ -15,6 +15,8 @@ namespace Next
         private static Gesture _fingerSnapGesture;
         private static Gesture _rotateRightGesture;
         private static Gesture _rotateLeftGesture;
+        private static Gesture _rotateRightLeftHandGesture;
+        private static Gesture _rotateLeftLeftHandGesture;
         private static Keyboard _keyboard;
         private static SpeechRecognizer _recognizer;
 
@@ -54,6 +56,8 @@ namespace Next
             await RegisterFingerSnapGesture();
             await RegisterRotateRightGesture();
             await RegisterRotateLeftGesture();
+            await RegisterRotateRightLeftHandGesture();
+            await RegisterRotateLeftLeftHandGesture();
         }
 
 
@@ -90,7 +94,7 @@ namespace Next
         }
 
 
-        // It defines and registers the Rotate Left Gesture.
+        // It defines and registers the Rotate Right Gesture for left hand.
         private static async Task RegisterRotateLeftGesture()
         {
             var hold = new HandPose("Hold", new FingerPose(new[] { Finger.Thumb, Finger.Index }, FingerFlexion.Open, PoseDirection.Forward),
@@ -105,6 +109,44 @@ namespace Next
             _rotateLeftGesture.Triggered += (s, e) => OnGestureDetected(s, e, ConsoleColor.Yellow);
 
             await _gesturesService.RegisterGesture(_rotateLeftGesture, isGlobal: true);
+        }
+
+
+        // It defines and registers the Rotate Left Gesture for left hand.
+        private static async Task RegisterRotateRightLeftHandGesture()
+        {
+            // Start with defining the first pose
+            var hold = new HandPose("Hold", new FingerPose(new[] { Finger.Thumb, Finger.Index }, FingerFlexion.Open, PoseDirection.Forward),
+                                            new FingertipDistanceRelation(Finger.Index, RelativeDistance.NotTouching, Finger.Thumb),
+                                            new FingertipPlacementRelation(Finger.Index, RelativePlacement.Left, Finger.Thumb));
+            // define the second pose
+            var rotate = new HandPose("Rotate", new FingerPose(new[] { Finger.Thumb, Finger.Index }, FingerFlexion.Open, PoseDirection.Forward),
+                                                new FingertipDistanceRelation(Finger.Index, RelativeDistance.NotTouching, Finger.Thumb),
+                                                new FingertipPlacementRelation(Finger.Index, RelativePlacement.Above, Finger.Thumb));
+
+            // define the gesture using the hand pose objects defined above forming a simple state machine
+            _rotateRightLeftHandGesture = new Gesture("RotateRightLeftHand", hold, rotate);
+            _rotateRightLeftHandGesture.Triggered += (s, e) => OnGestureDetected(s, e, ConsoleColor.Blue);
+
+            await _gesturesService.RegisterGesture(_rotateRightLeftHandGesture, isGlobal: true);
+        }
+
+        private static async Task RegisterRotateLeftLeftHandGesture()
+        {
+            // Start with defining the first pose
+            var hold = new HandPose("Hold", new FingerPose(new[] { Finger.Thumb, Finger.Index }, FingerFlexion.Open, PoseDirection.Forward),
+                                            new FingertipDistanceRelation(Finger.Index, RelativeDistance.NotTouching, Finger.Thumb),
+                                            new FingertipPlacementRelation(Finger.Index, RelativePlacement.Left, Finger.Thumb));
+            // define the second pose
+            var rotate = new HandPose("Rotate", new FingerPose(new[] { Finger.Thumb, Finger.Index }, FingerFlexion.Open, PoseDirection.Forward),
+                                                new FingertipDistanceRelation(Finger.Index, RelativeDistance.NotTouching, Finger.Thumb),
+                                                new FingertipPlacementRelation(Finger.Index, RelativePlacement.Below, Finger.Thumb));
+
+            // define the gesture using the hand pose objects defined above forming a simple state machine
+            _rotateLeftLeftHandGesture = new Gesture("RotatLeftLeftHand", hold, rotate);
+            _rotateLeftLeftHandGesture.Triggered += (s, e) => OnGestureDetected(s, e, ConsoleColor.Yellow);
+
+            await _gesturesService.RegisterGesture(_rotateLeftLeftHandGesture, isGlobal: true);
         }
 
 
@@ -123,6 +165,10 @@ namespace Next
             else if (args.GestureSegment.Name == "RotateRight")
                 _keyboard.Send(Keyboard.VirtualKeyShort.RIGHT);
             else if (args.GestureSegment.Name == "RotateLeft")
+                _keyboard.Send(Keyboard.VirtualKeyShort.LEFT);
+            else if (args.GestureSegment.Name == "RotateRightLeftHand")
+                _keyboard.Send(Keyboard.VirtualKeyShort.RIGHT);
+            else if (args.GestureSegment.Name == "RotateLeftLeftHand")
                 _keyboard.Send(Keyboard.VirtualKeyShort.LEFT);
         }
 
