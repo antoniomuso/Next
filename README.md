@@ -36,7 +36,7 @@ Once detected a command (either gestural or vocal), a keyboard signal is sent by
 ### Gestural Interaction
 Regarding the employed gestures, the *Finger Snap* gesture is a predefined one in the gestures SDK, while we had to define the *Rotate Right* and *Rotate Left* gestures.
 The definition of a gesture is seen as a sequence of two poses.
-We set a common initial pose, in which the index finger and the thumb are well spaced and in the horizontal position, while the other fingers are bent. In the second pose, instead, the disposition of the fingers is the same, but the hand is rotated by 90 degrees so that the thumb and the index are in the vertical position. The difference between the two gestures (right and left) is recognized because the thumb is **above** the index in the former, vice-versa in the latter.
+We set a common initial pose, in which the index finger and the thumb are well spaced and in the horizontal position, while the other fingers are bent. In the second pose, instead, the disposition of the fingers is the same, but the hand is rotated by 90 degrees so that the thumb and the index are in the vertical position. The difference between the two gestures (right and left) is recognized because, when you use the right hand, the thumb is **above** the index in the former, vice-versa in the latter. In case you use the left hand, the role of the two fingers is inverted.
 
 <p align="center"> <img src="images/gestures_recognition.gif"> </p>
 
