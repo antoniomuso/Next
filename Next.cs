@@ -94,7 +94,7 @@ namespace Next
         }
 
 
-        // It defines and registers the Rotate Right Gesture for left hand.
+        // It defines and registers the Rotate Right Gesture.
         private static async Task RegisterRotateLeftGesture()
         {
             var hold = new HandPose("Hold", new FingerPose(new[] { Finger.Thumb, Finger.Index }, FingerFlexion.Open, PoseDirection.Forward),
@@ -112,7 +112,7 @@ namespace Next
         }
 
 
-        // It defines and registers the Rotate Left Gesture for left hand.
+        // It defines and registers the Rotate Right Gesture for left hand.
         private static async Task RegisterRotateRightLeftHandGesture()
         {
             // Start with defining the first pose
@@ -131,6 +131,8 @@ namespace Next
             await _gesturesService.RegisterGesture(_rotateRightLeftHandGesture, isGlobal: true);
         }
 
+
+        // It defines and registers the Rotate Left Gesture for left hand.
         private static async Task RegisterRotateLeftLeftHandGesture()
         {
             // Start with defining the first pose
