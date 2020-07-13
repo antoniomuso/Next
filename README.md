@@ -1,4 +1,4 @@
-# *Next!* A tool to remote control your presentations
+# *Next!* A multimodal tool to remote control your presentations
 
 *Next!* allows you to change slide without using mouse and keyboard or any other kind of device that requires physical contact. Exploiting the Microsoft Kinect, it enables you to use both gestures and voice commands to control your presentations.
 
@@ -26,7 +26,7 @@ For example, as you can see in the [demo](https://youtu.be/r-WBsEpnS9Q), if you 
 In order to use *Next!* you need a Microsoft Kinect v2 and the [Project Gesture SDK](https://www.microsoft.com/en-us/research/project/gesture/). Note that, due to these dependencies, it runs only on Microsoft Windows.
  Voice recognition works with [Microsoft Azure Speech to Text](https://azure.microsoft.com/en-us/services/cognitive-services/speech-to-text/). It needs a subscription key for Azure Cognitive Services, that can be obtained through a Microsoft account.
 
-Once cloned or dowloaded this repository, just open the [`Next.sln`](Next.sln) solution in Visual Studio, insert your *subscription key* and *region endpoint* in [`App.config`](App.config) and run the project. 
+Once cloned or dowloaded this repository, just open the [`Next.sln`](Next.sln) solution in Visual Studio, insert your *subscription key* and *region service* in [`App.config`](App.config) and run the project. 
 
 ## Developement
 Our software exploits Kinect's depth sensor to perform gesture recognition and its microphone array for capturing voice.
