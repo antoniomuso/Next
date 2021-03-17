@@ -49,6 +49,7 @@ Even if the gestural interaction is better to use because the voice channel is a
 
 In order to avoid that the pronunciation of the words "*next slide*" or "*previous slide*" inside more complex sentences triggers a command, we used a regular expression which matches commands if and only if they are pronounced alone or syntactically separated from the rest of the sentence. This way, an expression such as "*Next slide, please*" is recognized as a command, while "*Next slide will show...*" is not.
 
+
 ## Authors
 [Francesca Romana Mattei](https://github.com/francescaromana), [Antonio Musolino](https://github.com/antoniomuso) and [Davide Sforza](https://github.com/dsforza96).
 
